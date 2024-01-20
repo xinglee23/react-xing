@@ -7,7 +7,7 @@ import { HostRoot } from './workTags';
 let workInprogress: FiberNode | null = null;
 
 function prepareFreshStack(root: FiberRootNode) {
-	workInprogress = createWorkInProgress(root.current);
+	workInprogress = createWorkInProgress(root.current, {});
 }
 
 function completeUnitOfWork(fiber: FiberNode) {
@@ -31,7 +31,7 @@ function performUnitOfWork(fiber: FiberNode) {
 	if (next === null) {
 		completeUnitOfWork(fiber);
 	} else {
-		workInprogress = next;
+		workInprogress = next as unknown as FiberNode | null;
 	}
 }
 
@@ -45,6 +45,7 @@ export function scheduleUpdateOnFiber(fiber: FiberNode) {
 	// 调度功能
 	// fiberRootNode
 	const root = markUpdateFromFiberToRoot(fiber);
+	// 开始更新流程
 	renderRoot(root);
 }
 

@@ -3,7 +3,12 @@ import { FiberNode, FiberRootNode } from './fiber';
 import { ReactElementType } from 'shared/ReactTypes';
 import { HostRoot } from './workTags';
 import { scheduleUpdateOnFiber } from './workLoop';
-import { UpdateQueue, createUpdateQueue, enqueueUpdate } from './updateQueue';
+import {
+	UpdateQueue,
+	createUpdateQueue,
+	createUpdate,
+	enqueueUpdate
+} from './updateQueue';
 
 export function createContainer(container: Container) {
 	const hostRootFiber = new FiberNode(HostRoot, {}, null);
@@ -20,9 +25,9 @@ export function unpdateContainer(
 	const hostRootFiber = root.current;
 	const update = createUpdate<ReactElementType | null>(element);
 	enqueueUpdate(
-		hostRootFiber.updateQueue
-	) as UpdateQueue<ReactElementType | null>,
-		update;
+		hostRootFiber.updateQueue as UpdateQueue<ReactElementType | null>,
+		update
+	);
 
 	scheduleUpdateOnFiber(hostRootFiber);
 	return element;
