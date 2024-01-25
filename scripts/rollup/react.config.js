@@ -4,14 +4,14 @@ import { getPackageJSON, resolvePkgPath, getBaseRollupPlugins } from './utils';
 const { name, module } = getPackageJSON('react');
 
 // react 包的路径
-const pakPath = resolvePkgPath(name);
+const pkgPath = resolvePkgPath(name);
 // react 产物路径
 const pakDistPath = resolvePkgPath(name, true);
 
 export default [
 	// react
 	{
-		input: `${pakPath}/${module}`,
+		input: `${pkgPath}/${module}`,
 		output: {
 			name: 'index.js',
 			file: `${pakDistPath}/index.js`,
@@ -20,7 +20,7 @@ export default [
 		plugins: [
 			...getBaseRollupPlugins(),
 			generatePackageJson({
-				inputFolder: pakPath,
+				inputFolder: pkgPath,
 				outputFolder: pakDistPath,
 				baseContents: ({ name, description, version }) => ({
 					name,
@@ -33,7 +33,7 @@ export default [
 	},
 	// jsx-runtime
 	{
-		input: `${pakPath}/src/jsx.ts`,
+		input: `${pkgPath}/src/jsx.ts`,
 		output: {
 			name: 'jsx-runtime.js',
 			file: `${pakDistPath}/jsx-runtime.js`,
@@ -43,7 +43,7 @@ export default [
 	},
 	// jsx-dev-runtime
 	{
-		input: `${pakPath}/src/jsx.ts`,
+		input: `${pkgPath}/src/jsx.ts`,
 		output: {
 			name: 'jsx-dev-runtime.js',
 			file: `${pakDistPath}/jsx-dev-runtime.js`,
