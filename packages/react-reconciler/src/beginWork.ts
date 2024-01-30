@@ -1,8 +1,14 @@
 import { ReactElementType } from 'shared/ReactTypes';
 import { FiberNode } from './fiber';
 import { UpdateQueue, processUpdateQueue } from './updateQueue';
-import { HostComponent, HostRoot, HostText } from './workTags';
+import {
+	HostRoot,
+	HostText,
+	HostComponent,
+	FunctionComponent
+} from './workTags';
 import { mountChildFibers, reconcileChildFibers } from './childFiber';
+import { renderWithHooks } from './fiberHooks';
 
 // 递归的 递阶段
 export const beginWork = (wip: FiberNode) => {
@@ -16,6 +22,8 @@ export const beginWork = (wip: FiberNode) => {
 			return updateHostComponent(wip);
 		case HostText:
 			return null;
+		case FunctionComponent:
+			return updateFunctionComponent;
 		default:
 			if (__DEV__) {
 				console.warn('beginWork 未实现的类型');
@@ -23,6 +31,12 @@ export const beginWork = (wip: FiberNode) => {
 			break;
 	}
 };
+
+function updateFunctionComponent(wip: FiberNode) {
+	const nextChildren = renderWithHooks(wip);
+	reconcilerChildren(wip, nextChildren);
+	return wip.child;
+}
 
 function updateHostRoot(wip: FiberNode) {
 	const baseState = wip.memoizedProps;

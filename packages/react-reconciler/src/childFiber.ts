@@ -2,7 +2,7 @@ import { ReactElementType } from 'shared/ReactTypes';
 import { FiberNode, createFiberFromElement } from './fiber';
 import { REACT_ELEMENT_TYPE } from 'shared/ReactSymbols';
 import { HostText } from './workTags';
-import { Plactment } from './fiberFlags';
+import { Placement } from './fiberFlags';
 
 function ChildReconciler(shouldTrackEffects: boolean) {
 	function reconcileSingElement(
@@ -28,7 +28,7 @@ function ChildReconciler(shouldTrackEffects: boolean) {
 
 	function placeSingleChild(fiber: FiberNode) {
 		if (shouldTrackEffects && fiber.alternate === null) {
-			fiber.flags |= Plactment;
+			fiber.flags |= Placement;
 		}
 		return fiber;
 	}
