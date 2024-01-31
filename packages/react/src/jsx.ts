@@ -7,7 +7,7 @@ import {
 	Ref,
 	Props,
 	ReactElementType,
-	ELementType
+	ElementType
 } from 'shared/ReactTypes';
 
 const ReactElement = function (
@@ -36,12 +36,12 @@ export function isValidElement(object: any) {
 	);
 }
 
-export const jsx = (type: ELementType, config: any, ...mayChildren: any) => {
+export const jsx = (type: ElementType, config: any, ...mayChildren: any) => {
 	let key: Key = null;
 	const props: Props = {};
 	let ref: Ref = null;
 
-	for (const prop of props) {
+	for (const prop in config) {
 		const val = config[prop];
 		if (prop === 'key') {
 			if (val !== undefined) {
@@ -72,14 +72,12 @@ export const jsx = (type: ELementType, config: any, ...mayChildren: any) => {
 	return ReactElement(type, key, ref, props);
 };
 
-export const jsxDEV = (type: ELementType, config: any) => {
+export const jsxDEV = (type: ElementType, config: any) => {
 	let key: Key = null;
 	const props: Props = {};
 	let ref: Ref = null;
 
-	console.log('propsprops22222', props);
-
-	for (const prop of props) {
+	for (const prop in config) {
 		const val = config[prop];
 		if (prop === 'key') {
 			if (val !== undefined) {

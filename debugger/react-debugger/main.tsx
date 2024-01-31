@@ -10,7 +10,7 @@ function App() {
 }
 
 function Child() {
-	return <span>big-react</span>;
+	return <div>big-react</div>;
 }
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

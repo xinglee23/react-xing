@@ -90,7 +90,7 @@ function mountWorkInProgressHook(): Hook {
 	if (workInProgressHook === null) {
 		// mount 时 第一个 hook
 		if (currentlyRenderingFiber === null) {
-			throw new Error('请在函数组件内调用');
+			throw new Error('请在函数组件内调用 hook');
 		} else {
 			workInProgressHook = hook;
 			currentlyRenderingFiber.memoizedState = workInProgressHook;
