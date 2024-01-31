@@ -18,10 +18,11 @@ export function createContainer(container: Container) {
 	return root;
 }
 
-export function unpdateContainer(
+export function updateContainer(
 	element: ReactElementType | null,
 	root: FiberRootNode
 ) {
+	console.log('update element', element);
 	const hostRootFiber = root.current;
 	const update = createUpdate<ReactElementType | null>(element);
 	enqueueUpdate(

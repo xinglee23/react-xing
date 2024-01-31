@@ -12,9 +12,9 @@ import { Action } from 'shared/ReactTypes';
 import { scheduleUpdateOnFiber } from './workLoop';
 
 let currentlyRenderingFiber: FiberNode | null = null;
-let workInProgresshook: Hook | null = null;
+let workInProgressHook: Hook | null = null;
 
-const { currentDispather } = internals;
+const { currentDispatcher } = internals;
 
 interface Hook {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,7 +33,7 @@ export function renderWithHooks(wip: FiberNode) {
 		// update
 	} else {
 		// mount
-		currentDispather.current = HooksDispatcherOnMount;
+		currentDispatcher.current = HooksDispatcherOnMount;
 	}
 
 	const Component = wip.type;
@@ -87,19 +87,19 @@ function mountWorkInProgressHook(): Hook {
 		next: null
 	};
 
-	if (workInProgresshook === null) {
+	if (workInProgressHook === null) {
 		// mount 时 第一个 hook
 		if (currentlyRenderingFiber === null) {
 			throw new Error('请在函数组件内调用');
 		} else {
-			workInProgresshook = hook;
-			currentlyRenderingFiber.memoizedState = workInProgresshook;
+			workInProgressHook = hook;
+			currentlyRenderingFiber.memoizedState = workInProgressHook;
 		}
 	} else {
 		// mount 时，后续的 hook
-		workInProgresshook.next = hook;
-		workInProgresshook = hook;
+		workInProgressHook.next = hook;
+		workInProgressHook = hook;
 	}
 
-	return workInProgresshook;
+	return workInProgressHook;
 }

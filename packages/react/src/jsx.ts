@@ -28,6 +28,14 @@ const ReactElement = function (
 	return element;
 };
 
+export function isValidElement(object: any) {
+	return (
+		typeof object === 'object' &&
+		object !== null &&
+		object.$$typeof === REACT_ELEMENT_TYPE
+	);
+}
+
 export const jsx = (type: ELementType, config: any, ...mayChildren: any) => {
 	let key: Key = null;
 	const props: Props = {};
@@ -68,6 +76,8 @@ export const jsxDEV = (type: ELementType, config: any) => {
 	let key: Key = null;
 	const props: Props = {};
 	let ref: Ref = null;
+
+	console.log('propsprops22222', props);
 
 	for (const prop of props) {
 		const val = config[prop];

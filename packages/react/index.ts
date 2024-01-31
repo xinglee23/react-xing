@@ -1,5 +1,5 @@
-import { jsxDEV } from './src/jsx';
-import currentDispather from './src/currentDispatcher';
+import { jsxDEV, jsx, isValidElement as isValidElementFn } from './src/jsx';
+import currentDispatcher from './src/currentDispatcher';
 import { Dispatcher, resolveDispatcher } from './src/currentDispatcher';
 
 export const useState: Dispatcher['useState'] = (initialState) => {
@@ -9,11 +9,12 @@ export const useState: Dispatcher['useState'] = (initialState) => {
 };
 
 // 内部数据共享层
-export const __SECERT_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = {
-	currentDispather
+export const __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = {
+	currentDispatcher
 };
 
-export default {
-	version: '0.0.0',
-	createElement: jsxDEV
-};
+export const version = '0.0.0';
+// TODO 跟进环境来使用 jsx 或者 jsxDEV
+export const createElement = jsx;
+
+export const isValidElement = isValidElementFn;
