@@ -81,6 +81,7 @@ export const createWorkInProgress = (
 	} else {
 		// update
 		wip.pendingProps = pendingProps;
+		// 清除副作用
 		wip.flags = NoFlags;
 		wip.subtreeFlags = NoFlags;
 		wip.deletions = null;

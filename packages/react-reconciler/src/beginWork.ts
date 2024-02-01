@@ -16,7 +16,7 @@ export const beginWork = (wip: FiberNode) => {
 	switch (wip.tag) {
 		case HostRoot:
 			// 计算状态的最新值
-			// 子暂时
+			// 创建子 FiberNode
 			return updateHostRoot(wip);
 		case HostComponent:
 			return updateHostComponent(wip);
@@ -39,7 +39,7 @@ function updateFunctionComponent(wip: FiberNode) {
 }
 
 function updateHostRoot(wip: FiberNode) {
-	const baseState = wip.memoizedProps;
+	const baseState = wip.memoizedState;
 	const updateQueue = wip.updateQueue as UpdateQueue<Element>;
 	const pending = updateQueue.shared.pending;
 	updateQueue.shared.pending = null;

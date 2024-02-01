@@ -10,7 +10,7 @@
 'use strict';
 
 let React;
-let ReactDOM;
+// let ReactDOM;
 let ReactTestUtils;
 
 describe('ReactElement', () => {
@@ -26,7 +26,7 @@ describe('ReactElement', () => {
 		global.Symbol = undefined;
 
 		React = require('react');
-		ReactDOM = require('react-dom');
+		// ReactDOM = require('react-dom');
 		ReactTestUtils = require('react-dom/test-utils');
 
 		// NOTE: We're explicitly not using JSX here. This is intended to test
@@ -232,7 +232,8 @@ describe('ReactElement', () => {
 		const REACT_ELEMENT_TYPE = function () {}; // fake Symbol
 		const OTHER_SYMBOL = function () {}; // another fake Symbol
 		/*eslint-enable */
-		global.Symbol = function (name) {
+		// global.Symbol = function (name) {
+		global.Symbol = function () {
 			return OTHER_SYMBOL;
 		};
 		global.Symbol.for = function (key) {

@@ -45,7 +45,7 @@ function workLoop() {
 
 export function scheduleUpdateOnFiber(fiber: FiberNode) {
 	// 调度功能
-	// fiberRootNode
+	// 拿到 fiberRootNode
 	const root = markUpdateFromFiberToRoot(fiber);
 	// 开始更新流程
 	renderRoot(root);
