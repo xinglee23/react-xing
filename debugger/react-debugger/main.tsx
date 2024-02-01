@@ -1,12 +1,12 @@
 import React from 'react';
+import { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 
 function App() {
-	return (
-		<div>
-			<Child />
-		</div>
-	);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [num, setNum] = useState(100);
+
+	return num === 3 ? <Child /> : <div>{num}</div>;
 }
 
 function Child() {
