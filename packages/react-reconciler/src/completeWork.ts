@@ -34,7 +34,7 @@ export const completeWork = (wip: FiberNode) => {
 				const instance = createInstance(wip.type);
 				// 2、 将 DOM 插入到 DOM
 				appendAllChildren(instance, wip);
-				wip.stateNode;
+				wip.stateNode = instance;
 			}
 			bubbleProperties(wip);
 			return null;
