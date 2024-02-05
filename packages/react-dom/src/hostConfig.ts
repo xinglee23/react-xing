@@ -34,7 +34,7 @@ export function commitUpdate(fiber: FiberNode) {
 
 		default:
 			if (__DEV__) {
-				console.warn('未实现的 Upatde 类型');
+				console.warn('未实现的 Update 类型');
 			}
 			break;
 	}
