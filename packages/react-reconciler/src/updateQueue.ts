@@ -28,6 +28,7 @@ export const createUpdateQueue = <State>() => {
 	} as UpdateQueue<State>;
 };
 
+// 往 updateQueue 里面增加 update
 export const enqueueUpdate = <Action>(
 	updateQueue: UpdateQueue<Action>,
 	update: Update<Action>
@@ -35,6 +36,7 @@ export const enqueueUpdate = <Action>(
 	updateQueue.shared.pending = update;
 };
 
+// updateQueue 消费 update 的方法
 export const processUpdateQueue = <State>(
 	baseState: State,
 	pendingUpdate: Update<State> | null

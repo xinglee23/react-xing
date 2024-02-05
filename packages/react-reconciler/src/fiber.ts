@@ -47,7 +47,7 @@ export class FiberNode {
 		this.alternate = null;
 		// 副作用
 		this.flags = NoFlags;
-		this.subtreeFlags = NoFlags;
+		this.subtreeFlags = NoFlags; // 子树中包含的flags
 		this.updateQueue = null;
 		this.deletions = null;
 	}
@@ -81,6 +81,7 @@ export const createWorkInProgress = (
 	} else {
 		// update
 		wip.pendingProps = pendingProps;
+		// 清除副作用
 		wip.flags = NoFlags;
 		wip.subtreeFlags = NoFlags;
 		wip.deletions = null;

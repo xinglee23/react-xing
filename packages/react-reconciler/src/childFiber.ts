@@ -8,6 +8,7 @@ import { REACT_ELEMENT_TYPE } from 'shared/ReactSymbols';
 import { HostText } from './workTags';
 import { ChildDeletion, Placement } from './fiberFlags';
 
+// 是否应该追踪副作用 shouldTrackEffects
 function ChildReconciler(shouldTrackEffects: boolean) {
 	function deleteChild(returnFiber: FiberNode, childToDelete: FiberNode) {
 		if (!shouldTrackEffects) {
@@ -87,9 +88,9 @@ function ChildReconciler(shouldTrackEffects: boolean) {
 		return fiber;
 	}
 	return function reconcileChildFibers(
-		returnFiber: FiberNode,
-		currentFiber: FiberNode | null,
-		newChild?: ReactElementType
+		returnFiber: FiberNode, // 父亲 fiberNode
+		currentFiber: FiberNode | null, // 当前的子节点的 currentFiber
+		newChild?: ReactElementType // 子节点的 ReactElementType
 	) {
 		// return
 		// 判断当前 fiber 的类型

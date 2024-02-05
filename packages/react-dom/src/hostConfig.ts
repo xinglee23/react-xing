@@ -1,3 +1,4 @@
+// 描述宿主环境的文件（宿主环境可能是浏览器也可能是是其他的）
 import { FiberNode } from 'react-reconciler/src/fiber';
 import { HostText } from 'react-reconciler/src/workTags';
 
