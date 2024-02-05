@@ -17,6 +17,7 @@ let currentHook: Hook | null = null;
 
 const { currentDispatcher } = internals;
 
+// FiberNode 的 memoizedState 指向的是链表， Hook 本身的 memoizedState 指向的是自身保存的值
 interface Hook {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	memoizedState: any;

@@ -8,6 +8,7 @@ import { HostRoot } from './workTags';
 // 当前 workInprogress 指向需要遍历的 workInProgress
 let workInprogress: FiberNode | null = null;
 
+// 初始化操作，将 workInProgress 指向需要遍历的第一个 fiberNode
 function prepareFreshStack(root: FiberRootNode) {
 	workInprogress = createWorkInProgress(root.current, {});
 }

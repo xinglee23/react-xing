@@ -6,10 +6,10 @@ import { Container } from 'hostConfig';
 
 export class FiberNode {
 	tag: WorkTag;
-	key: Key;
+	key: Key; //  reactElement key
 	type: any;
-	stateNode: any;
-	pendingProps: Props;
+	stateNode: any; // HostComponent 保存到就是 div 这个 dom
+	pendingProps: Props; // 当前 props 接下来有哪些 props 需要改变
 	ref: Ref;
 
 	return: null | FiberNode;
@@ -40,7 +40,7 @@ export class FiberNode {
 		this.ref = null;
 
 		// 构成工作单元
-		this.pendingProps = pendingProps; // 刚开始准备工作的 props
+		this.pendingProps = pendingProps; // 工作单元刚开始准备工作的 props
 		this.memoizedProps = null; // 最终的 props
 		this.memoizedState = null;
 
