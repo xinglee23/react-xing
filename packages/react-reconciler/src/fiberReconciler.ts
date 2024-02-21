@@ -10,7 +10,7 @@ import {
 	enqueueUpdate
 } from './updateQueue';
 
-// 创建整个应用的根结点，FiberRootNode，并将 FIberRootNode 和hostRootNode 链接
+// 创建整个应用的根结点，FiberRootNode，并将 FiberRootNode 和hostRootNode 链接
 // reactDOM.createRoot 调用 createContainer
 export function createContainer(container: Container) {
 	const hostRootFiber = new FiberNode(HostRoot, {}, null);
