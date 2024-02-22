@@ -8,10 +8,11 @@ import { initEvent } from './SyntheticEvent';
 
 export function createRoot(container: Container) {
 	const root = createContainer(container);
-	console.log('rootroot', root);
+	console.log('--root--', root);
 
 	return {
 		render(element: ReactElementType) {
+			console.log('--element--', element);
 			initEvent(container, 'click');
 			return updateContainer(element, root);
 		}
