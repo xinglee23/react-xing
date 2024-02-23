@@ -24,9 +24,9 @@ export const beginWork = (wip: FiberNode) => {
 		case HostText:
 			return null;
 		case FunctionComponent:
-			return updateFunctionComponent;
+			return updateFunctionComponent(wip);
 		case Fragment:
-			return updateFragment;
+			return updateFragment(wip);
 		default:
 			if (__DEV__) {
 				console.warn('beginWork 未实现的类型');

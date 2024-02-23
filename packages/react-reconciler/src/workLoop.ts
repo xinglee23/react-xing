@@ -24,6 +24,7 @@ function completeUnitOfWork(fiber: FiberNode) {
 		}
 
 		node = node.return;
+		workInprogress = node;
 	} while (node !== null);
 }
 
