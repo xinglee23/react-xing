@@ -3,6 +3,7 @@ import { Action } from 'shared/ReactTypes';
 
 export interface Update<State> {
 	action: Action<State>;
+	next: Update<any> | null;
 }
 
 export interface UpdateQueue<State> {
@@ -15,7 +16,8 @@ export interface UpdateQueue<State> {
 // 创建 update 实例
 export const createUpdate = <State>(action: Action<State>): Update<State> => {
 	return {
-		action
+		action,
+		next: null
 	};
 };
 
