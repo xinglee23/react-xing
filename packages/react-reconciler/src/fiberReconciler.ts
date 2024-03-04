@@ -9,6 +9,7 @@ import {
 	createUpdate,
 	enqueueUpdate
 } from './updateQueue';
+import { requestUpdateLane } from './fiberLanes';
 
 // 创建整个应用的根结点，FiberRootNode，并将 FiberRootNode 和 hostRootNode 链接
 // reactDOM.createRoot 调用 createContainer
@@ -26,12 +27,13 @@ export function updateContainer(
 	root: FiberRootNode
 ) {
 	const hostRootFiber = root.current;
-	const update = createUpdate<ReactElementType | null>(element);
+	const lane = requestUpdateLane();
+	const update = createUpdate<ReactElementType | null>(element, lane);
 	enqueueUpdate(
 		hostRootFiber.updateQueue as UpdateQueue<ReactElementType | null>,
 		update
 	);
 
-	scheduleUpdateOnFiber(hostRootFiber);
+	scheduleUpdateOnFiber(hostRootFiber, lane);
 	return element;
 }

@@ -12,10 +12,12 @@ import { Action } from 'shared/ReactTypes';
 import { scheduleUpdateOnFiber } from './workLoop';
 import { Flags, PassiveEffect } from './fiberFlags';
 import { HookHasEffect, Passive } from './hookEffectTags';
+import { Lane, NoLane, requestUpdateLane } from './fiberLanes';
 
 let currentlyRenderingFiber: FiberNode | null = null;
 let workInProgressHook: Hook | null = null;
 let currentHook: Hook | null = null;
+let renderLane: Lane = NoLane;
 
 const { currentDispatcher } = internals;
 
@@ -42,13 +44,14 @@ export interface FCUpdateQueue<State> extends UpdateQueue<State> {
 type EffectCallback = () => void;
 type EffectDeps = any[] | null;
 
-export function renderWithHooks(wip: FiberNode) {
+export function renderWithHooks(wip: FiberNode, lane: Lane) {
 	// 赋值操作
 	currentlyRenderingFiber = wip;
 	// 重置 hooks链表
 	wip.memoizedState = null;
 	// 重置 effect 链表
 	wip.updateQueue = null;
+	renderLane = lane;
 
 	const current = wip.alternate;
 	if (current !== null) {
@@ -68,6 +71,7 @@ export function renderWithHooks(wip: FiberNode) {
 	currentlyRenderingFiber = null;
 	workInProgressHook = null;
 	currentHook = null;
+	renderLane = NoLane;
 	return children;
 }
 
@@ -156,7 +160,7 @@ function pushEffect(
 		effect.next = effect;
 		updateQueue.lastEffect = effect;
 	} else {
-		// 插入 effect
+		// 插入effect
 		const lastEffect = updateQueue.lastEffect;
 		if (lastEffect === null) {
 			effect.next = effect;
@@ -168,7 +172,6 @@ function pushEffect(
 			updateQueue.lastEffect = effect;
 		}
 	}
-
 	return effect;
 }
 
@@ -206,7 +209,11 @@ function updateState<State>(): [State, Dispatch<State>] {
 	const queue = hook.updateQueue as UpdateQueue<State>;
 	const pending = queue.shared.pending;
 	if (pending !== null) {
-		const { memoizedState } = processUpdateQueue(hook.memoizedState, pending);
+		const { memoizedState } = processUpdateQueue(
+			hook.memoizedState,
+			pending,
+			renderLane
+		);
 		hook.memoizedState = memoizedState;
 	}
 
@@ -219,9 +226,10 @@ function dispatchSetState<State>(
 	updateQueue: UpdateQueue<State>,
 	action: Action<State>
 ) {
-	const update = createUpdate(action);
+	const lane = requestUpdateLane();
+	const update = createUpdate(action, lane);
 	enqueueUpdate(updateQueue, update);
-	scheduleUpdateOnFiber(fiber);
+	scheduleUpdateOnFiber(fiber, lane);
 }
 
 function mountWorkInProgressHook(): Hook {

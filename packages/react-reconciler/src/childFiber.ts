@@ -119,6 +119,7 @@ function ChildReconciler(shouldTrackEffects: boolean) {
 	function reconcileChildrenArray(
 		returnFiber: FiberNode,
 		currentFirstChild: FiberNode | null,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		newChild: any[]
 	) {
 		// 最后一个可复用fiber在current中的index
@@ -189,6 +190,7 @@ function ChildReconciler(shouldTrackEffects: boolean) {
 		returnFiber: FiberNode,
 		existingChildren: ExistingChildren,
 		index: number,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		element: any
 	): FiberNode | null {
 		const keyToUse = element.key !== null ? element.key : index;
