@@ -43,6 +43,7 @@ export function createRoot() {
 		return children;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function childToJSX(child: any): any {
 		if (typeof child === 'string' || typeof child === 'number') {
 			return child;

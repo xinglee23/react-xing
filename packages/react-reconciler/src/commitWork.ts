@@ -104,6 +104,7 @@ function commitPassiveEffect(
 	) {
 		return;
 	}
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const updateQueue = fiber.updateQueue as FCUpdateQueue<any>;
 	if (updateQueue !== null) {
 		if (updateQueue.lastEffect === null && __DEV__) {
