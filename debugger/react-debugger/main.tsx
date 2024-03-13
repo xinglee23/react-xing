@@ -1,20 +1,26 @@
 import React from 'react';
-import { useState } from 'react';
-import ReactDOM from 'react-dom/client';
+import { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 
 function App() {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [num, setNum] = useState(100);
-
-	return num === 3 ? <Child /> : <div>{num}</div>;
-	// return <div onClickCapture={() => setNum(num + 1)}>{num}</div>;
-	// return <div>123</div>;
+	const [num, update] = useState(100);
+	return (
+		<ul onClick={() => update(50)}>
+			{new Array(num).fill(0).map((_, i) => {
+				return <Child key={i}>{i}</Child>;
+			})}
+		</ul>
+	);
 }
 
-function Child() {
-	return <div>big-react</div>;
+function Child({ children }) {
+	const now = performance.now();
+	// eslint-disable-next-line no-empty
+	while (performance.now() - now < 4) {}
+	return <li>{children}</li>;
 }
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-	<App />
-);
+// eslint-disable-next-line
+const root = ReactDOM.createRoot(document.querySelector('#root'));
+
+root.render(<App />);
