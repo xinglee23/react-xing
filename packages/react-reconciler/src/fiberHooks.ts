@@ -83,12 +83,14 @@ export function renderWithHooks(wip: FiberNode, lane: Lane) {
 const HooksDispatcherOnMount: Dispatcher = {
 	useState: mountState,
 	useEffect: mountEffect,
+	useRef: mountRef,
 	useTransition: mountTransition
 };
 
 const HooksDispatcherOnUpdate: Dispatcher = {
 	useState: updateState,
 	useEffect: updateEffect,
+	useRef: updateRef,
 	useTransition: updateTransition
 };
 
@@ -260,6 +262,18 @@ function mountTransition(): [boolean, (callback: () => void) => void] {
 	const start = startTransition.bind(null, setPending);
 	hook.memoizedState = start;
 	return [isPending, start];
+}
+
+function mountRef<T>(initialValue: T): { current: T } {
+	const hook = mountWorkInProgressHook();
+	const ref = { current: initialValue };
+	hook.memoizedState = ref;
+	return ref;
+}
+
+function updateRef<T>(initialValue: T): { current: T } {
+	const hook = updateWorkInProgressHook();
+	return hook.memoizedState;
 }
 
 function updateTransition(): [boolean, (callback: () => void) => void] {

@@ -5,6 +5,7 @@ export interface Dispatcher {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	useEffect: (callback: () => void | void, deps: any[] | void) => void;
 	useTransition: () => [boolean, (callback: () => void) => void];
+	useRef: <T>(initialState: T) => { current: T };
 }
 
 export type Dispatch<State> = (action: Action<State>) => void;

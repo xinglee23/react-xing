@@ -10,14 +10,19 @@ export const useState: Dispatcher['useState'] = (initialState) => {
 	return dispatcher.useState(initialState);
 };
 
+export const useRef: Dispatcher['useRef'] = (initialValue) => {
+	const dispatcher = resolveDispatcher() as Dispatcher;
+	return dispatcher.useRef(initialValue);
+};
+
 export const useEffect: Dispatcher['useEffect'] = (create, deps) => {
 	const dispatcher = resolveDispatcher();
 	return dispatcher.useEffect(create, deps);
 };
 
-export const useTransation: Dispatcher['useTransation'] = () => {
+export const useTransation: Dispatcher['useTransition'] = () => {
 	const dispatcher = resolveDispatcher();
-	return dispatcher.useTransation();
+	return dispatcher.useTransition();
 };
 
 // 内部数据共享层
