@@ -10,7 +10,7 @@ import {
 	processUpdateQueue,
 	Update
 } from './updateQueue';
-import { Action } from 'shared/ReactTypes';
+import { Action, ReactContext } from 'shared/ReactTypes';
 import { scheduleUpdateOnFiber } from './workLoop';
 import { Flags, PassiveEffect } from './fiberFlags';
 import { HookHasEffect, Passive } from './hookEffectTags';
@@ -84,14 +84,16 @@ const HooksDispatcherOnMount: Dispatcher = {
 	useState: mountState,
 	useEffect: mountEffect,
 	useRef: mountRef,
-	useTransition: mountTransition
+	useTransition: mountTransition,
+	useContext: readContext
 };
 
 const HooksDispatcherOnUpdate: Dispatcher = {
 	useState: updateState,
 	useEffect: updateEffect,
 	useRef: updateRef,
-	useTransition: updateTransition
+	useTransition: updateTransition,
+	useContext: readContext
 };
 
 function mountEffect(create: EffectCallback | void, deps: EffectDeps | void) {
@@ -105,6 +107,15 @@ function mountEffect(create: EffectCallback | void, deps: EffectDeps | void) {
 		undefined,
 		nextDeps
 	);
+}
+
+function readContext<T>(context: ReactContext<T>): T {
+	const consumer = currentlyRenderingFiber;
+	if (consumer === null) {
+		throw new Error('只能在函数组件中调用useContext');
+	}
+	const value = context._currentValue;
+	return value;
 }
 
 function updateEffect(create: EffectCallback | void, deps: EffectDeps | void) {

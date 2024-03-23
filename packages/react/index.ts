@@ -25,6 +25,13 @@ export const useTransation: Dispatcher['useTransition'] = () => {
 	return dispatcher.useTransition();
 };
 
+export { createContext } from './src/context';
+
+export const useContext: Dispatcher['useContext'] = (context) => {
+	const dispatcher = resolveDispatcher() as Dispatcher;
+	return dispatcher.useContext(context);
+};
+
 // 内部数据共享层
 export const __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = {
 	currentDispatcher,

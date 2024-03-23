@@ -3,7 +3,8 @@ import {
 	FunctionComponent,
 	HostComponent,
 	WorkTag,
-	Fragment
+	Fragment,
+	ContextProvider
 } from './workTags';
 import { Props, Key, Ref, ReactElementType } from 'shared/ReactTypes';
 import { Flags, NoFlags } from './fiberFlags';
@@ -11,6 +12,7 @@ import { Container } from 'hostConfig';
 import { Effect } from './fiberHooks';
 import { Lanes, Lane, NoLane, NoLanes } from './fiberLanes';
 import { CallbackNode } from 'scheduler';
+import { REACT_PROVIDER_TYPE } from 'shared/ReactSymbols';
 
 export class FiberNode {
 	tag: WorkTag;
@@ -129,13 +131,18 @@ export const createWorkInProgress = (
 
 export function createFiberFromElement(
 	element: ReactElementType,
-	lanes: Lanes
+	lanes?: Lanes
 ): FiberNode {
 	const { type, key, props, ref } = element;
 	let fiberTag: WorkTag = FunctionComponent;
 	if (typeof type === 'string') {
 		// <div> type 'div'
 		fiberTag = HostComponent;
+	} else if (
+		typeof type === 'object' &&
+		type.$$typeof === REACT_PROVIDER_TYPE
+	) {
+		fiberTag = ContextProvider;
 	} else if (typeof type !== 'function' && __DEV__) {
 		console.warn('未定义的type类型');
 	}
