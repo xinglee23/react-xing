@@ -118,7 +118,7 @@ export const processUpdateQueue = <State>(
 		} while (pending !== first);
 
 		if (newBaseQueueLast === null) {
-			// 本次计算没有update被跳过
+			// 本次计算没有 update 被跳过
 			newBaseState = newState;
 		} else {
 			newBaseQueueLast.next = newBaseQueueFirst;

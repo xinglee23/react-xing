@@ -116,7 +116,7 @@ const commitLayoutEffectsOnFiber = (
 	const { flags, tag } = finishedWork;
 
 	if ((flags & Ref) !== NoFlags && tag === HostComponent) {
-		// 绑定新的ref
+		// 绑定新的 ref
 		safelyAttachRef(finishedWork);
 		finishedWork.flags &= ~Ref;
 	}

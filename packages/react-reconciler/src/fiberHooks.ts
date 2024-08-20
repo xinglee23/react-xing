@@ -248,7 +248,7 @@ function updateState<State>(): [State, Dispatch<State>] {
 			// p2 -> b0 -> b1 -> b2 -> p0 -> p1 -> p2
 		}
 		baseQueue = pending;
-		// 保存在current中
+		// 保存在 current 中
 		current.baseQueue = pending;
 		queue.shared.pending = null;
 

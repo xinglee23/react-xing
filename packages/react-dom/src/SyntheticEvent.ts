@@ -87,7 +87,7 @@ function triggerEventFlow(paths: EventCallback[], se: SyntheticEvent) {
 	for (let i = 0; i < paths.length; i++) {
 		const callback = paths[i];
 
-		unstable_runWithPriority(eventTypeToSchdulerPriority(se.type), () => {
+		unstable_runWithPriority(eventTypeToSchedulerPriority(se.type), () => {
 			callback.call(null, se);
 		});
 
@@ -97,7 +97,7 @@ function triggerEventFlow(paths: EventCallback[], se: SyntheticEvent) {
 	}
 }
 
-function eventTypeToSchdulerPriority(eventType: string) {
+function eventTypeToSchedulerPriority(eventType: string) {
 	switch (eventType) {
 		case 'click':
 		case 'keydown':

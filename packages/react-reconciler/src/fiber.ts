@@ -110,6 +110,7 @@ export const createWorkInProgress = (
 		// mount
 		wip = new FiberNode(current.tag, pendingProps, current.key);
 		wip.stateNode = current.stateNode;
+
 		wip.alternate = current;
 		current.alternate = wip;
 	} else {
@@ -125,13 +126,15 @@ export const createWorkInProgress = (
 	wip.updateQueue = current.updateQueue;
 	wip.memoizedProps = current.memoizedProps;
 	wip.memoizedState = current.memoizedState;
+	wip.ref = current.ref;
+	wip.lanes = current.lanes;
 
 	return wip;
 };
 
 export function createFiberFromElement(
 	element: ReactElementType,
-	lanes?: Lanes
+	lanes: Lanes
 ): FiberNode {
 	const { type, key, props, ref } = element;
 	let fiberTag: WorkTag = FunctionComponent;

@@ -123,6 +123,10 @@ function ensureRootIsScheduled(root: FiberRootNode) {
 	const curPriority = updateLane;
 	const prevPriority = root.callbackPriority;
 
+	if (curPriority === prevPriority) {
+		return;
+	}
+
 	if (existingCallback !== null) {
 		unstable_cancelCallback(existingCallback);
 	}
@@ -159,7 +163,7 @@ function performConcurrentWorkOnRoot(
 	didTimeout: boolean
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any {
-	// 保证useEffect回调执行
+	// 保证 useEffect 回调执行
 	const curCallback = root.callbackNode;
 	const didFlushPassiveEffect = flushPassiveEffects(root.pendingPassiveEffects);
 	if (didFlushPassiveEffect) {
@@ -266,7 +270,7 @@ function renderRoot(root: FiberRootNode, lane: Lane, shouldTimeSlice: boolean) {
 	if (shouldTimeSlice && workInprogress !== null) {
 		return RootInComplete;
 	}
-	// render阶段执行完
+	// render 阶段执行完
 	if (!shouldTimeSlice && workInprogress !== null && __DEV__) {
 		console.error(`render阶段结束时wip不应该不是null`);
 	}
